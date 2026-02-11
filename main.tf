@@ -1,5 +1,5 @@
-resource "azurerm_data_factory_linked_service_azure_databricks" "data_factory_linked_service_azure_databrickss" {
-  for_each = var.data_factory_linked_service_azure_databrickss
+resource "azurerm_data_factory_linked_service_azure_databricks" "data_factory_linked_service_azure_databrickses" {
+  for_each = var.data_factory_linked_service_azure_databrickses
 
   adb_domain                 = each.value.adb_domain
   data_factory_id            = each.value.data_factory_id

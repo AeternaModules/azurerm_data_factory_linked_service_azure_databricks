@@ -1,6 +1,6 @@
-variable "data_factory_linked_service_azure_databrickss" {
+variable "data_factory_linked_service_azure_databrickses" {
   description = <<EOT
-Map of data_factory_linked_service_azure_databrickss, attributes below
+Map of data_factory_linked_service_azure_databrickses, attributes below
 Required:
     - adb_domain
     - data_factory_id
@@ -51,7 +51,7 @@ EOT
       cluster_version       = string
       instance_pool_id      = string
       max_number_of_workers = optional(number)
-      min_number_of_workers = optional(number, 1)
+      min_number_of_workers = optional(number) # Default: 1
     }))
     key_vault_password = optional(object({
       linked_service_name = string
@@ -64,7 +64,7 @@ EOT
       init_scripts                = optional(list(string))
       log_destination             = optional(string)
       max_number_of_workers       = optional(number)
-      min_number_of_workers       = optional(number, 1)
+      min_number_of_workers       = optional(number) # Default: 1
       node_type                   = string
       spark_config                = optional(map(string))
       spark_environment_variables = optional(map(string))
