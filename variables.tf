@@ -13,6 +13,7 @@ Optional:
     - existing_cluster_id
     - integration_runtime_name
     - msi_work_space_resource_id
+    - msi_workspace_id
     - parameters
     - instance_pool (block):
         - cluster_version (required)
@@ -46,6 +47,7 @@ EOT
     existing_cluster_id        = optional(string)
     integration_runtime_name   = optional(string)
     msi_work_space_resource_id = optional(string)
+    msi_workspace_id           = optional(string)
     parameters                 = optional(map(string))
     instance_pool = optional(object({
       cluster_version       = string
@@ -70,5 +72,143 @@ EOT
       spark_environment_variables = optional(map(string))
     }))
   }))
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.access_token == null || (length(v.access_token) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.description == null || (length(v.description) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        length(v.adb_domain) > 0
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.existing_cluster_id == null || (length(v.existing_cluster_id) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.new_cluster_config == null || (length(v.new_cluster_config.node_type) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.new_cluster_config == null || (v.new_cluster_config.min_number_of_workers == null || (v.new_cluster_config.min_number_of_workers >= 1 && v.new_cluster_config.min_number_of_workers <= 25000))
+      )
+    ])
+    error_message = "must be between 1 and 25000"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.new_cluster_config == null || (v.new_cluster_config.max_number_of_workers == null || (v.new_cluster_config.max_number_of_workers >= 1 && v.new_cluster_config.max_number_of_workers <= 25000))
+      )
+    ])
+    error_message = "must be between 1 and 25000"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.new_cluster_config == null || (length(v.new_cluster_config.cluster_version) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.new_cluster_config == null || (v.new_cluster_config.log_destination == null || (length(v.new_cluster_config.log_destination) > 0))
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.new_cluster_config == null || (v.new_cluster_config.driver_node_type == null || (length(v.new_cluster_config.driver_node_type) > 0))
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.instance_pool == null || (v.instance_pool.min_number_of_workers == null || (v.instance_pool.min_number_of_workers >= 1 && v.instance_pool.min_number_of_workers <= 25000))
+      )
+    ])
+    error_message = "must be between 1 and 25000"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.instance_pool == null || (v.instance_pool.max_number_of_workers == null || (v.instance_pool.max_number_of_workers >= 1 && v.instance_pool.max_number_of_workers <= 25000))
+      )
+    ])
+    error_message = "must be between 1 and 25000"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.instance_pool == null || (length(v.instance_pool.instance_pool_id) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.instance_pool == null || (length(v.instance_pool.cluster_version) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.integration_runtime_name == null || (length(v.integration_runtime_name) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  # --- Unconfirmed validation candidates, derived from azurerm_data_factory_linked_service_azure_databricks's provider source ---
+  # Not auto-enabled: either a bespoke provider validator we can't safely translate,
+  # or a path that crosses a list-typed block (needs its own for_each wrapping).
+  # Review, translate into a real validation{} block above, and delete once confirmed.
+  # path: name
+  #   source:    [from validate.LinkedServiceDatasetName] regexp.MustCompile(`^[-.+?/<>*%&:\\]+$`).MatchString(value)
+  # path: data_factory_id
+  #   source:    [from factories.ValidateFactoryID] !ok
+  # path: data_factory_id
+  #   source:    [from factories.ValidateFactoryID] err != nil
+  # path: msi_workspace_id
+  #   source:    [from workspaces.ValidateWorkspaceID] !ok
+  # path: msi_workspace_id
+  #   source:    [from workspaces.ValidateWorkspaceID] err != nil
+  # path: key_vault_password.linked_service_name
+  #   source:    [from validate.LinkedServiceDatasetName] regexp.MustCompile(`^[-.+?/<>*%&:\\]+$`).MatchString(value)
+  # path: key_vault_password.secret_name
+  #   source:    [from validate.LinkedServiceDatasetName] regexp.MustCompile(`^[-.+?/<>*%&:\\]+$`).MatchString(value)
 }
 
