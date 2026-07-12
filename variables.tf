@@ -7,6 +7,8 @@ Required:
     - name
 Optional:
     - access_token
+    - access_token_key_vault_id (alternative to access_token - read from Key Vault instead)
+    - access_token_key_vault_secret_name (alternative to access_token - read from Key Vault instead)
     - additional_properties
     - annotations
     - description
@@ -37,18 +39,20 @@ Optional:
 EOT
 
   type = map(object({
-    adb_domain                 = string
-    data_factory_id            = string
-    name                       = string
-    access_token               = optional(string)
-    additional_properties      = optional(map(string))
-    annotations                = optional(list(string))
-    description                = optional(string)
-    existing_cluster_id        = optional(string)
-    integration_runtime_name   = optional(string)
-    msi_work_space_resource_id = optional(string)
-    msi_workspace_id           = optional(string)
-    parameters                 = optional(map(string))
+    adb_domain                         = string
+    data_factory_id                    = string
+    name                               = string
+    access_token                       = optional(string)
+    access_token_key_vault_id          = optional(string)
+    access_token_key_vault_secret_name = optional(string)
+    additional_properties              = optional(map(string))
+    annotations                        = optional(list(string))
+    description                        = optional(string)
+    existing_cluster_id                = optional(string)
+    integration_runtime_name           = optional(string)
+    msi_work_space_resource_id         = optional(string)
+    msi_workspace_id                   = optional(string)
+    parameters                         = optional(map(string))
     instance_pool = optional(object({
       cluster_version       = string
       instance_pool_id      = string

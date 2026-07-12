@@ -1,10 +1,15 @@
+data "azurerm_key_vault_secret" "access_token" {
+  for_each     = { for k, v in var.data_factory_linked_service_azure_databrickses : k => v if v.access_token_key_vault_id != null && v.access_token_key_vault_secret_name != null }
+  name         = each.value.access_token_key_vault_secret_name
+  key_vault_id = each.value.access_token_key_vault_id
+}
 resource "azurerm_data_factory_linked_service_azure_databricks" "data_factory_linked_service_azure_databrickses" {
   for_each = var.data_factory_linked_service_azure_databrickses
 
   adb_domain                 = each.value.adb_domain
   data_factory_id            = each.value.data_factory_id
   name                       = each.value.name
-  access_token               = each.value.access_token
+  access_token               = each.value.access_token != null ? each.value.access_token : try(data.azurerm_key_vault_secret.access_token[each.key].value, null)
   additional_properties      = each.value.additional_properties
   annotations                = each.value.annotations
   description                = each.value.description
