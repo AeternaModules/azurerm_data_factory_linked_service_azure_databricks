@@ -1,3 +1,7 @@
+output "data_factory_linked_service_azure_databrickses_id" {
+  description = "Map of id values across all data_factory_linked_service_azure_databrickses, keyed the same as var.data_factory_linked_service_azure_databrickses"
+  value       = { for k, v in azurerm_data_factory_linked_service_azure_databricks.data_factory_linked_service_azure_databrickses : k => v.id }
+}
 output "data_factory_linked_service_azure_databrickses_access_token" {
   description = "Map of access_token values across all data_factory_linked_service_azure_databrickses, keyed the same as var.data_factory_linked_service_azure_databrickses"
   value       = { for k, v in azurerm_data_factory_linked_service_azure_databricks.data_factory_linked_service_azure_databrickses : k => v.access_token }
