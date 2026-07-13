@@ -76,68 +76,126 @@ EOT
       spark_environment_variables = optional(map(string))
     }))
   }))
-  # --- Unconfirmed validation candidates, derived from azurerm_data_factory_linked_service_azure_databricks's provider source ---
-  # Not auto-enabled: either a bespoke provider validator we can't safely translate,
-  # or a path that crosses a list-typed block (needs its own for_each wrapping).
-  # Review, translate into a real validation{} block above, and delete once confirmed.
-  # path: name
-  #   source:    [from validate.LinkedServiceDatasetName] regexp.MustCompile(`^[-.+?/<>*%&:\\]+$`).MatchString(value)
-  # path: data_factory_id
-  #   source:    [from factories.ValidateFactoryID] !ok
-  # path: data_factory_id
-  #   source:    [from factories.ValidateFactoryID] err != nil
-  # path: msi_workspace_id
-  #   source:    [from workspaces.ValidateWorkspaceID] !ok
-  # path: msi_workspace_id
-  #   source:    [from workspaces.ValidateWorkspaceID] err != nil
-  # path: access_token
-  #   condition: length(value) > 0
-  #   message:   must not be empty
-  # path: key_vault_password.linked_service_name
-  #   source:    [from validate.LinkedServiceDatasetName] regexp.MustCompile(`^[-.+?/<>*%&:\\]+$`).MatchString(value)
-  # path: key_vault_password.secret_name
-  #   source:    [from validate.LinkedServiceDatasetName] regexp.MustCompile(`^[-.+?/<>*%&:\\]+$`).MatchString(value)
-  # path: description
-  #   condition: length(value) > 0
-  #   message:   must not be empty
-  # path: adb_domain
-  #   condition: length(value) > 0
-  #   message:   must not be empty
-  # path: existing_cluster_id
-  #   condition: length(value) > 0
-  #   message:   must not be empty
-  # path: new_cluster_config.node_type
-  #   condition: length(value) > 0
-  #   message:   must not be empty
-  # path: new_cluster_config.min_number_of_workers
-  #   condition: value >= 1 && value <= 25000
-  #   message:   must be between 1 and 25000
-  # path: new_cluster_config.max_number_of_workers
-  #   condition: value >= 1 && value <= 25000
-  #   message:   must be between 1 and 25000
-  # path: new_cluster_config.cluster_version
-  #   condition: length(value) > 0
-  #   message:   must not be empty
-  # path: new_cluster_config.log_destination
-  #   condition: length(value) > 0
-  #   message:   must not be empty
-  # path: new_cluster_config.driver_node_type
-  #   condition: length(value) > 0
-  #   message:   must not be empty
-  # path: instance_pool.min_number_of_workers
-  #   condition: value >= 1 && value <= 25000
-  #   message:   must be between 1 and 25000
-  # path: instance_pool.max_number_of_workers
-  #   condition: value >= 1 && value <= 25000
-  #   message:   must be between 1 and 25000
-  # path: instance_pool.instance_pool_id
-  #   condition: length(value) > 0
-  #   message:   must not be empty
-  # path: instance_pool.cluster_version
-  #   condition: length(value) > 0
-  #   message:   must not be empty
-  # path: integration_runtime_name
-  #   condition: length(value) > 0
-  #   message:   must not be empty
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.access_token == null || (length(v.access_token) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.description == null || (length(v.description) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        length(v.adb_domain) > 0
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.existing_cluster_id == null || (length(v.existing_cluster_id) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.new_cluster_config == null || (length(v.new_cluster_config.node_type) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.new_cluster_config == null || (v.new_cluster_config.min_number_of_workers == null || (v.new_cluster_config.min_number_of_workers >= 1 && v.new_cluster_config.min_number_of_workers <= 25000))
+      )
+    ])
+    error_message = "must be between 1 and 25000"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.new_cluster_config == null || (v.new_cluster_config.max_number_of_workers == null || (v.new_cluster_config.max_number_of_workers >= 1 && v.new_cluster_config.max_number_of_workers <= 25000))
+      )
+    ])
+    error_message = "must be between 1 and 25000"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.new_cluster_config == null || (length(v.new_cluster_config.cluster_version) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.new_cluster_config == null || (v.new_cluster_config.log_destination == null || (length(v.new_cluster_config.log_destination) > 0))
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.new_cluster_config == null || (v.new_cluster_config.driver_node_type == null || (length(v.new_cluster_config.driver_node_type) > 0))
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.instance_pool == null || (v.instance_pool.min_number_of_workers == null || (v.instance_pool.min_number_of_workers >= 1 && v.instance_pool.min_number_of_workers <= 25000))
+      )
+    ])
+    error_message = "must be between 1 and 25000"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.instance_pool == null || (v.instance_pool.max_number_of_workers == null || (v.instance_pool.max_number_of_workers >= 1 && v.instance_pool.max_number_of_workers <= 25000))
+      )
+    ])
+    error_message = "must be between 1 and 25000"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.instance_pool == null || (length(v.instance_pool.instance_pool_id) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.instance_pool == null || (length(v.instance_pool.cluster_version) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_azure_databrickses : (
+        v.integration_runtime_name == null || (length(v.integration_runtime_name) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  # Note: 7 additional provider-side validators are enforced at apply time but not mirrored as validation{} blocks here (bespoke or non-mechanically-translatable).
 }
 
