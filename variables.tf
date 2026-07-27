@@ -1,6 +1,6 @@
-variable "data_factory_linked_service_azure_databrickses" {
+variable "data_factory_linked_service_azure_databricks" {
   description = <<EOT
-Map of data_factory_linked_service_azure_databrickses, attributes below
+Map of data_factory_linked_service_azure_databricks, attributes below
 Required:
     - adb_domain
     - data_factory_id
@@ -78,7 +78,7 @@ EOT
   }))
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.access_token == null || (length(v.access_token) > 0)
       )
     ])
@@ -86,7 +86,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.description == null || (length(v.description) > 0)
       )
     ])
@@ -94,7 +94,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         length(v.adb_domain) > 0
       )
     ])
@@ -102,7 +102,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.existing_cluster_id == null || (length(v.existing_cluster_id) > 0)
       )
     ])
@@ -110,7 +110,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.new_cluster_config == null || (length(v.new_cluster_config.node_type) > 0)
       )
     ])
@@ -118,7 +118,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.new_cluster_config == null || (v.new_cluster_config.min_number_of_workers == null || (v.new_cluster_config.min_number_of_workers >= 1 && v.new_cluster_config.min_number_of_workers <= 25000))
       )
     ])
@@ -126,7 +126,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.new_cluster_config == null || (v.new_cluster_config.max_number_of_workers == null || (v.new_cluster_config.max_number_of_workers >= 1 && v.new_cluster_config.max_number_of_workers <= 25000))
       )
     ])
@@ -134,7 +134,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.new_cluster_config == null || (length(v.new_cluster_config.cluster_version) > 0)
       )
     ])
@@ -142,7 +142,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.new_cluster_config == null || (v.new_cluster_config.log_destination == null || (length(v.new_cluster_config.log_destination) > 0))
       )
     ])
@@ -150,7 +150,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.new_cluster_config == null || (v.new_cluster_config.driver_node_type == null || (length(v.new_cluster_config.driver_node_type) > 0))
       )
     ])
@@ -158,7 +158,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.instance_pool == null || (v.instance_pool.min_number_of_workers == null || (v.instance_pool.min_number_of_workers >= 1 && v.instance_pool.min_number_of_workers <= 25000))
       )
     ])
@@ -166,7 +166,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.instance_pool == null || (v.instance_pool.max_number_of_workers == null || (v.instance_pool.max_number_of_workers >= 1 && v.instance_pool.max_number_of_workers <= 25000))
       )
     ])
@@ -174,7 +174,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.instance_pool == null || (length(v.instance_pool.instance_pool_id) > 0)
       )
     ])
@@ -182,7 +182,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.instance_pool == null || (length(v.instance_pool.cluster_version) > 0)
       )
     ])
@@ -190,7 +190,7 @@ EOT
   }
   validation {
     condition = alltrue([
-      for k, v in var.data_factory_linked_service_azure_databrickses : (
+      for k, v in var.data_factory_linked_service_azure_databricks : (
         v.integration_runtime_name == null || (length(v.integration_runtime_name) > 0)
       )
     ])
