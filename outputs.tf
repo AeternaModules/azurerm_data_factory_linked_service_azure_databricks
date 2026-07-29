@@ -43,10 +43,6 @@ output "data_factory_linked_service_azure_databricks_key_vault_password" {
   description = "Map of key_vault_password values across all data_factory_linked_service_azure_databricks, keyed the same as var.data_factory_linked_service_azure_databricks"
   value       = { for k, v in azurerm_data_factory_linked_service_azure_databricks.data_factory_linked_service_azure_databricks : k => v.key_vault_password if v.key_vault_password != null && length(v.key_vault_password) > 0 }
 }
-output "data_factory_linked_service_azure_databricks_msi_work_space_resource_id" {
-  description = "Map of msi_work_space_resource_id values across all data_factory_linked_service_azure_databricks, keyed the same as var.data_factory_linked_service_azure_databricks"
-  value       = { for k, v in azurerm_data_factory_linked_service_azure_databricks.data_factory_linked_service_azure_databricks : k => v.msi_work_space_resource_id if v.msi_work_space_resource_id != null && length(v.msi_work_space_resource_id) > 0 }
-}
 output "data_factory_linked_service_azure_databricks_msi_workspace_id" {
   description = "Map of msi_workspace_id values across all data_factory_linked_service_azure_databricks, keyed the same as var.data_factory_linked_service_azure_databricks"
   value       = { for k, v in azurerm_data_factory_linked_service_azure_databricks.data_factory_linked_service_azure_databricks : k => v.msi_workspace_id if v.msi_workspace_id != null && length(v.msi_workspace_id) > 0 }

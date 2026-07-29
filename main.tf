@@ -6,18 +6,17 @@ data "azurerm_key_vault_secret" "access_token" {
 resource "azurerm_data_factory_linked_service_azure_databricks" "data_factory_linked_service_azure_databricks" {
   for_each = var.data_factory_linked_service_azure_databricks
 
-  adb_domain                 = each.value.adb_domain
-  data_factory_id            = each.value.data_factory_id
-  name                       = each.value.name
-  access_token               = each.value.access_token != null ? each.value.access_token : try(data.azurerm_key_vault_secret.access_token[each.key].value, null)
-  additional_properties      = each.value.additional_properties
-  annotations                = each.value.annotations
-  description                = each.value.description
-  existing_cluster_id        = each.value.existing_cluster_id
-  integration_runtime_name   = each.value.integration_runtime_name
-  msi_work_space_resource_id = each.value.msi_work_space_resource_id
-  msi_workspace_id           = each.value.msi_workspace_id
-  parameters                 = each.value.parameters
+  adb_domain               = each.value.adb_domain
+  data_factory_id          = each.value.data_factory_id
+  name                     = each.value.name
+  access_token             = each.value.access_token != null ? each.value.access_token : try(data.azurerm_key_vault_secret.access_token[each.key].value, null)
+  additional_properties    = each.value.additional_properties
+  annotations              = each.value.annotations
+  description              = each.value.description
+  existing_cluster_id      = each.value.existing_cluster_id
+  integration_runtime_name = each.value.integration_runtime_name
+  msi_workspace_id         = each.value.msi_workspace_id
+  parameters               = each.value.parameters
 
   dynamic "instance_pool" {
     for_each = each.value.instance_pool != null ? [each.value.instance_pool] : []

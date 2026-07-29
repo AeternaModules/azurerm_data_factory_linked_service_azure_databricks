@@ -14,7 +14,6 @@ Optional:
     - description
     - existing_cluster_id
     - integration_runtime_name
-    - msi_work_space_resource_id
     - msi_workspace_id
     - parameters
     - instance_pool (block):
@@ -50,7 +49,6 @@ EOT
     description                        = optional(string)
     existing_cluster_id                = optional(string)
     integration_runtime_name           = optional(string)
-    msi_work_space_resource_id         = optional(string)
     msi_workspace_id                   = optional(string)
     parameters                         = optional(map(string))
     instance_pool = optional(object({
