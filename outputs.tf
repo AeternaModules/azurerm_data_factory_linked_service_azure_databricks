@@ -33,7 +33,7 @@ output "data_factory_linked_service_azure_databricks_existing_cluster_id" {
 }
 output "data_factory_linked_service_azure_databricks_instance_pool" {
   description = "Map of instance_pool values across all data_factory_linked_service_azure_databricks, keyed the same as var.data_factory_linked_service_azure_databricks"
-  value       = { for k, v in azurerm_data_factory_linked_service_azure_databricks.data_factory_linked_service_azure_databricks : k => v.instance_pool if v.instance_pool != null && length(v.instance_pool) > 0 }
+  value       = { for k, v in azurerm_data_factory_linked_service_azure_databricks.data_factory_linked_service_azure_databricks : k => one(v.instance_pool) if v.instance_pool != null && length(v.instance_pool) > 0 }
 }
 output "data_factory_linked_service_azure_databricks_integration_runtime_name" {
   description = "Map of integration_runtime_name values across all data_factory_linked_service_azure_databricks, keyed the same as var.data_factory_linked_service_azure_databricks"
@@ -41,7 +41,7 @@ output "data_factory_linked_service_azure_databricks_integration_runtime_name" {
 }
 output "data_factory_linked_service_azure_databricks_key_vault_password" {
   description = "Map of key_vault_password values across all data_factory_linked_service_azure_databricks, keyed the same as var.data_factory_linked_service_azure_databricks"
-  value       = { for k, v in azurerm_data_factory_linked_service_azure_databricks.data_factory_linked_service_azure_databricks : k => v.key_vault_password if v.key_vault_password != null && length(v.key_vault_password) > 0 }
+  value       = { for k, v in azurerm_data_factory_linked_service_azure_databricks.data_factory_linked_service_azure_databricks : k => one(v.key_vault_password) if v.key_vault_password != null && length(v.key_vault_password) > 0 }
 }
 output "data_factory_linked_service_azure_databricks_msi_workspace_id" {
   description = "Map of msi_workspace_id values across all data_factory_linked_service_azure_databricks, keyed the same as var.data_factory_linked_service_azure_databricks"
@@ -53,7 +53,7 @@ output "data_factory_linked_service_azure_databricks_name" {
 }
 output "data_factory_linked_service_azure_databricks_new_cluster_config" {
   description = "Map of new_cluster_config values across all data_factory_linked_service_azure_databricks, keyed the same as var.data_factory_linked_service_azure_databricks"
-  value       = { for k, v in azurerm_data_factory_linked_service_azure_databricks.data_factory_linked_service_azure_databricks : k => v.new_cluster_config if v.new_cluster_config != null && length(v.new_cluster_config) > 0 }
+  value       = { for k, v in azurerm_data_factory_linked_service_azure_databricks.data_factory_linked_service_azure_databricks : k => one(v.new_cluster_config) if v.new_cluster_config != null && length(v.new_cluster_config) > 0 }
 }
 output "data_factory_linked_service_azure_databricks_parameters" {
   description = "Map of parameters values across all data_factory_linked_service_azure_databricks, keyed the same as var.data_factory_linked_service_azure_databricks"
